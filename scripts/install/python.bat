@@ -2,31 +2,16 @@
 
 setlocal
 
-set PATH=%PATH%;%PORTABLE_HOME%config\myconf\windows\scripts
-
 set PYTHON_URL=https://www.python.org/ftp/python/3.10.4/python-3.10.4-embed-amd64.zip
 set GET_PIP_URL=https://bootstrap.pypa.io/get-pip.py
 
-rem  Assume that this path exists and was checked on init.
-set INSTALL_PATH=%PORTABLE_HOME%app\run
-
-set PYTHON_PATH=%INSTALL_PATH%\python
-
-if exist %PYTHON_PATH% (
-  echo Dir already exists: %PYTHON_PATH%
-  goto :EOF
+rem  The `PYTHON` must be set on init.
+for /f %%i in ("%PYTHON%") do (
+  set PYTHON_PATH=%%~dpi
 )
 
-
-rem --- Sentinel -------------------------------------------------------------
-
-echo.
-echo Install %PYTHON_URL%
-echo To %PYTHON_PATH%
-set /p proceed=Enter 'yes' to proceed: 
-
-if not "%proceed%"=="yes" (
-  echo Cancel
+if exist %PYTHON_PATH% (
+  echo Already exists: %PYTHON_PATH%
   goto :EOF
 )
 
@@ -42,5 +27,17 @@ for /f %%i in ("%PYTHON_URL%") do (
 call download %PYTHON_URL% "%python_zip%" || goto :EOF
 call unzip "%python_zip%" "%PYTHON_PATH%" || goto :EOF
 del "%python_zip%"
+
+
+rem --- Install pip ----------------------------------------------------------
+
+set get_pip=%PYTHON_PATH%get-pip.py
+
+call download %GET_PIP_URL% "%get_pip%" || goto :EOF
+
+%PYTHON% "%get_pip%" || goto :EOF
+
+del "%get_pip%"
+
 
 endlocal
