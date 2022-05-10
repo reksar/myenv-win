@@ -3,10 +3,10 @@
 setlocal
 
 set zip=%~1
-set path=%~2
+set destination=%~2
 
 rem  Requires the powershell v5+
-%POWERSHELL% -command ^
-  "Expand-Archive '%zip%' -DestinationPath '%path%'"
+powershell -command ^
+  "Expand-Archive '%zip%' -DestinationPath '%destination%'"
 
 endlocal

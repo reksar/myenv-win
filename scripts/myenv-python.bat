@@ -4,6 +4,9 @@ rem --- Python path ----------------------------------------------------------
 
 set MYPYTHON_PATH=%MYHOME%app\run\python
 
+
+set err=0
+
 if not exist %MYPYTHON_PATH% (
   echo [Python] ERR: %MYPYTHON_PATH% is not found.
   echo [Python] Try to `install python`.
@@ -13,19 +16,16 @@ if not exist %MYPYTHON_PATH% (
 set PYTHON_SCRIPTS_DIR=%MYPYTHON_PATH%\Scripts
 
 if not exist %PYTHON_SCRIPTS_DIR% (
-  echo [Python] ERR: %PYTHON_SCRIPTS_DIR% is not found.
-  echo [Python] It must contain the pip at least, so try to `install pip`.
-  echo [Python] Or try to `install python`.
-  goto :END
+  echo [Python] WARN: %PYTHON_SCRIPTS_DIR% is not found.
+  echo [Python] At least pip.exe and virtualenv.exe are unacailable.
+  echo [Python] Try to `install pip` or `install python`.
 )
 
 set SITE_PACKAGES_DIR=%MYPYTHON_PATH%\Lib\site-packages
 
 if not exist %SITE_PACKAGES_DIR% (
-  echo [Python] ERR: %SITE_PACKAGES_DIR% is not found.
-  echo [Python] It must contain the pip at least, so try to `install pip`.
-  echo [Python] Or try to `install python`.
-  goto :END
+  echo [Python] WARN: %SITE_PACKAGES_DIR% is not found.
+  echo [Python] Try to `install pip`.
 )
 
 
