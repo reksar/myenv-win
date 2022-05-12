@@ -2,7 +2,7 @@
 
 rem --- Python path ----------------------------------------------------------
 
-set MYPYTHON_PATH=%MYHOME%app\run\python
+set MYPYTHON_PATH=%MYHOME%\app\run\python
 
 
 set err=0
