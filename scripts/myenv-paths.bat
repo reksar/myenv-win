@@ -3,9 +3,9 @@
 rem --- Add %CURRENT_DIR% to %PATH% ------------------------------------------
 
 rem  Relative to %MYHOME%
-set CURRENT_PATH_SUFFIX=config\myconf\windows\scripts
+set CURRENT_PATH_SUFFIX=app\cfg\myenv\windows\scripts
 
-rem  %MYHOME%\%CURRENT_PATH_SUFFIX%\
+rem  Abspath %MYHOME%\%CURRENT_PATH_SUFFIX%\
 set CURRENT_DIR=%~dp0
 
 rem  Remove last \
@@ -19,7 +19,7 @@ rem --- Set %MYHOME% ---------------------------------------------------------
 rem  %MYHOME% dir can be anywhere, e.g. on an external disk drive, but it must
 rem  contain the specific dir structure and be parent of the %CURRENT_DIR%
 rem  (see above).
-for /f %%i in ("%CURRENT_DIR%\..\..\..") do (
+for /f %%i in ("%CURRENT_DIR%\..\..\..\..") do (
   rem  ends with \
   set MYHOME=%%~dpi
 )
