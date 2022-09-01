@@ -1,7 +1,8 @@
 @echo off
-
-rem  --------------------------------------------------------------------------
-rem  Summary of myenv paths and required executables.
-rem  --------------------------------------------------------------------------
-
-rem  TODO
+setlocal
+set test=%~dp0myenv-test
+echo Testing myenv ...
+call "%test%\python"
+call "%test%\git"
+echo DONE
+endlocal
