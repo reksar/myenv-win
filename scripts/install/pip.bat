@@ -1,109 +1,74 @@
 @echo off
 
 setlocal
+set PYTHON_PATH=%MYHOME%\app\run\python
+set test=%~dp0..\myenv-test
 
-set GET_PIP_URL=https://bootstrap.pypa.io/get-pip.py
+call "%test%\pip" || goto :PYTHON
+goto :END
+
+:PYTHON
+call "%test%\python" || exit /b %ERRORLEVEL%
 
 
-rem --- Check that pip already exists ----------------------------------------
-
-for /f %%i in ('pip --version') do (
-  if "%%i"=="pip" (
-    echo [Install pip] pip found!
-    goto :END
-  )
+rem  --- Check ensurepip ------------------------------------------------------
+for /f %%i in ('
+  python -m ensurepip --version 2^>NUL ^^
+  ^| findstr "pip [0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*"
+') do (
+  goto :ENSUREPIP
 )
 
 
-rem --- Require python -------------------------------------------------------
+rem  --- Check pip package exists ---------------------------------------------
 
-set /a err=1
-
-for /f %%i in ('python --version') do (
-  if not "%%i"=="Python" (
-    goto :IS_PYTHON_ERR
-  )
-  set /a err=0
-)
-
-:IS_PYTHON_ERR
-if %err% EQU 1 (
-  echo [Install pip] ERR: Python not found.
-  echo [Install pip] Try to `install python` first.
-  goto :END
-)
-
-set /a err=0
-
-
-rem --- Check required PATHs -------------------------------------------------
-
-if "%MYPYTHON_PATH%"=="" (
-  echo [Install pip] ERR: MYPYTHON_PATH is not set!
-  goto :END
-)
-
-setlocal EnableDelayedExpansion
-
-if "!PATH:%MYPYTHON_PATH%=!"=="%PATH%" (
-  echo [Install pip] ERR: %MYPYTHON_PATH% not in PATH!
-  endlocal
-  goto :END
-)
-
-if "!PATH:%MYPYTHON_PATH%\Scripts=!"=="%PATH%" (
-  echo [Install pip] ERR: %MYPYTHON_PATH%\Scripts not in PATH!
-  endlocal
-  goto :END
-)
-
-endlocal
-
-
-rem --- Check pip executables -------------------------------------------------
-
-set SITE_PACKAGES=%MYPYTHON_PATH%\Lib\site-packages
-
-if exist "%MYPYTHON_PATH%\Scripts\pip.exe" (
-  echo [Install pip] WARN: pip.exe found.
+if exist "%PYTHON_PATH%\Scripts\pip.exe" (
+  echo [WARN] pip.exe found.
 ) else (
-  goto :INSTALL_PIP
+  goto :GET_PIP
 )
+
+set SITE_PACKAGES=%PYTHON_PATH%\Lib\site-packages
 
 if exist "%SITE_PACKAGES%\pip" (
-  echo [Install pip] WARN: pip package found, but can't run sorrectly.
-  echo [Install pip] Trying to set sys.path for Python.
-  goto :PYTHON_SYS_PATH
+  echo [WARN] pip package found. Trying to set sys.path for embedded Python.
+  goto :EMBEDDED_PYTHON_PATH
 )
 
 
-rem --- Install pip ----------------------------------------------------------
+rem  --------------------------------------------------------------------------
+:GET_PIP
 
-:INSTALL_PIP
+set GET_PIP_URL=https://bootstrap.pypa.io/get-pip.py
+set get_pip=%PYTHON_PATH%get-pip.py
 
-set get_pip=%MYPYTHON_PATH%get-pip.py
-
-call download %GET_PIP_URL% "%get_pip%" || goto :EOF
-python "%get_pip%" || goto :EOF
+call download %GET_PIP_URL% "%get_pip%" || goto :END
+python "%get_pip%" || goto :END
 del "%get_pip%"
 
 
-rem --- Set Python sys.path --------------------------------------------------
-
-:PYTHON_SYS_PATH
+rem  --------------------------------------------------------------------------
+:EMBEDDED_PYTHON_PATH
 
 set BOOL=import sys; print(r'%SITE_PACKAGES%' in sys.path)
 
 for /f "delims=" %%i in ('python -c "%BOOL%"') do (
   if "%%i"=="True" (
-    echo [Install pip] WARN: sys.path is already set.
+    echo [WARN] sys.path is already set.
     goto :END
   )
 )
 
-for /f %%i in ('where %MYPYTHON_PATH%:python*._pth') do (
+for /f %%i in ('where %PYTHON_PATH%:python*._pth') do (
   echo %SITE_PACKAGES%>>"%%i"
 )
+
+
+rem  --------------------------------------------------------------------------
+:ENSUREPIP
+echo Installing pip using ensurepip module.
+python -m ensurepip --root %PYTHON_PATH%
+python -m pip install --force-reinstall --upgrade pip
 
 
 :END

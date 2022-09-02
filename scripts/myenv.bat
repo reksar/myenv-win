@@ -19,7 +19,10 @@ rem        |- vim
 rem  --------------------------------------------------------------------------
 
 
-for %%i in ("%~dp0..\..\..\..\..") do (set MYHOME=%%~fi)
+for %%i in ("%~dp0..\..\..\..\..") do (
+  set MYHOME=%%~fi
+)
+set MYENV=%MYHOME%\app\cfg\myenv
 
 
 rem  --- Set PATH to portable software ----------------------------------------
@@ -28,7 +31,7 @@ set MYENV_RUN=%MYHOME%\app\run
 
 rem  --- Python ---
 if exist "%MYENV_RUN%\python\python.exe" (
-  set PATH=%MYENV_RUN%\python;%PATH%
+  set PATH=%MYENV_RUN%\python;%MYENV_RUN%\python\Scripts;%PATH%
 )
 
 rem  --- Git ---
@@ -52,6 +55,11 @@ for /d %%i in ("%MYENV_RUN%\vim\vim*") do (
   )
 )
 
+rem  --- CMake ---
+if exist "%MYENV_RUN%\cmake\bin\cmake.exe" (
+  set PATH=%MYENV_RUN%\cmake\bin;%PATH%
+)
+
 
 set MYENV_RUN=
 
@@ -61,7 +69,7 @@ rem  --- Set PATH to Windows utility scripts ----------------------------------
 set PATH=%~dp0;%PATH%
 
 rem  Consider the trailing backslash!
-set MYENV_SCRIPTS=%MYHOME%\app\cfg\myenv\windows\scripts\
+set MYENV_SCRIPTS=%MYENV%\windows\scripts\
 
 rem  Validate.
 if not "%MYENV_SCRIPTS%"=="%~dp0" (
