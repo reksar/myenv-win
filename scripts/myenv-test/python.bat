@@ -31,7 +31,7 @@ if %path_warn% NEQ 0 (
 
 
 for /f %%i in ('
-  python --version^|findstr /e "[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*"
+  python --version 2^>NUL^|findstr /e "[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*"
 ') do (
   echo [OK] Python found.
   goto :END
