@@ -20,44 +20,44 @@ rem  --------------------------------------------------------------------------
 
 
 for %%i in ("%~dp0..\..\..\..\..") do (
-  set MYHOME=%%~fi
+  set "MYHOME=%%~fi"
 )
-set MYENV=%MYHOME%\app\cfg\myenv
+set "MYENV=%MYHOME%\app\cfg\myenv"
 
 
 rem  --- Set PATH to portable software ----------------------------------------
-set MYENV_RUN=%MYHOME%\app\run
+set "MYENV_RUN=%MYHOME%\app\run"
 
 
 rem  --- Python ---
 if exist "%MYENV_RUN%\python\python.exe" (
-  set PATH=%MYENV_RUN%\python;%MYENV_RUN%\python\Scripts;%PATH%
+  set "PATH=%MYENV_RUN%\python;%MYENV_RUN%\python\Scripts;%PATH%"
 )
 
 rem  --- Git ---
 if exist "%MYENV_RUN%\git\bin\git.exe" (
-  set PATH=%MYENV_RUN%\git\bin;%PATH%
+  set "PATH=%MYENV_RUN%\git\bin;%PATH%"
 )
 
 rem  --- Neovim ---
 if exist "%MYENV_RUN%\nvim\bin\nvim.exe" (
-  set PATH=%MYENV_RUN%\nvim\bin;%PATH%
+  set "PATH=%MYENV_RUN%\nvim\bin;%PATH%"
 )
 
 rem  --- Vim ---
 for /d %%i in ("%MYENV_RUN%\vim\vim*") do (
   if exist "%%i\gvim.exe" (
-    set PATH=%%i;%PATH%
+    set "PATH=%%i;%PATH%"
   ) else (
     if exist "%%i\vim.exe" (
-      set PATH=%%i;%PATH%
+      set "PATH=%%i;%PATH%"
     )
   )
 )
 
 rem  --- CMake ---
 if exist "%MYENV_RUN%\cmake\bin\cmake.exe" (
-  set PATH=%MYENV_RUN%\cmake\bin;%PATH%
+  set "PATH=%MYENV_RUN%\cmake\bin;%PATH%"
 )
 
 
@@ -66,10 +66,10 @@ set MYENV_RUN=
 
 rem  --- Set PATH to Windows utility scripts ----------------------------------
 
-set PATH=%~dp0;%PATH%
+set "PATH=%~dp0;%PATH%"
 
 rem  Consider the trailing backslash!
-set MYENV_SCRIPTS=%MYENV%\windows\scripts\
+set "MYENV_SCRIPTS=%MYENV%\windows\scripts\"
 
 rem  Validate.
 if not "%MYENV_SCRIPTS%"=="%~dp0" (
@@ -79,4 +79,4 @@ if not "%MYENV_SCRIPTS%"=="%~dp0" (
 set MYENV_SCRIPTS=
 
 
-if "%~1"=="" (cd %MYHOME%) else (cd %1)
+if "%~1"=="" (cd "%MYHOME%") else (cd "%~1")
