@@ -5,7 +5,7 @@ rem  Portable myenv dir three:
 rem
 rem  MYHOME  <-- portable root
 rem  |- app
-rem     |- cfg
+rem     |- config
 rem     |  |- myenv
 rem     |     |- windows
 rem     |        |- scripts  <-- current
@@ -22,7 +22,7 @@ rem  --------------------------------------------------------------------------
 for %%i in ("%~dp0..\..\..\..\..") do (
   set "MYHOME=%%~fi"
 )
-set "MYENV=%MYHOME%\app\cfg\myenv"
+set MYENV=%MYHOME%\app\config\myenv
 
 
 rem  --- Set PATH to portable software ----------------------------------------
