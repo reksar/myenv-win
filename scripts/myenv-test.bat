@@ -7,5 +7,8 @@ call "%test%\python"
 call "%test%\pip"
 call "%test%\git"
 call "%test%\cmake"
+call "%test%\cl"
+call "%test%\nmake"
+call "%test%\rg"
 echo DONE
 endlocal

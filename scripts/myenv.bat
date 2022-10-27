@@ -60,6 +60,16 @@ if exist "%MYENV_RUN%\cmake\bin\cmake.exe" (
   set "PATH=%MYENV_RUN%\cmake\bin;%PATH%"
 )
 
+rem  --- VC ---
+if exist "%MYENV_RUN%\vc\vcvars-x64-x64.bat" (
+  call "%MYENV_RUN%\vc\vcvars-x64-x64.bat"
+)
+
+rem  --- Ripgrep ---
+if exist "%MYENV_RUN%\ripgrep\rg.exe" (
+  set "PATH=%MYENV_RUN%\ripgrep;%PATH%"
+)
+
 
 set MYENV_RUN=
 
