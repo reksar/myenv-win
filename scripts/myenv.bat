@@ -37,6 +37,19 @@ if exist "%MYENV_RUN%\python\python.exe" (
 rem  --- Git ---
 if exist "%MYENV_RUN%\git\bin\git.exe" (
   set "PATH=%MYENV_RUN%\git\bin;%PATH%"
+) else (
+  if exist "%MYENV_RUN%\git\cmd\git.exe" (
+    set "PATH=%MYENV_RUN%\git\cmd;%PATH%"
+  )
+)
+
+rem  --- Git utils ---
+for /f %%i in ('where git 2^>NUL') do (
+  for %%j in (%%~dpi..) do (
+    if exist "%%~fj\usr\bin" (
+      set "PATH=%%~fj\usr\bin;%PATH%"
+    )
+  )
 )
 
 rem  --- Neovim ---
