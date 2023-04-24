@@ -22,7 +22,7 @@ rem  --------------------------------------------------------------------------
 for %%i in ("%~dp0..\..\..\..\..") do (
   set "MYHOME=%%~fi"
 )
-set MYENV=%MYHOME%\app\config\myenv
+set "MYENV=%MYHOME%\app\config\myenv"
 
 
 rem  --- Set PATH to portable software ----------------------------------------
@@ -102,4 +102,4 @@ if not "%MYENV_SCRIPTS%"=="%~dp0" (
 set MYENV_SCRIPTS=
 
 
-if "%~1"=="" (cd "%MYHOME%") else (cd "%~1")
+if not "%*" == "" cd "%*"
