@@ -26,6 +26,7 @@ set "MYENV=%MYHOME%\app\cfg\myenv"
 
 
 rem  --- Set PATH to portable software ----------------------------------------
+
 set "MYENV_RUN=%MYHOME%\app\run"
 
 
@@ -95,11 +96,12 @@ rem  Consider the trailing backslash!
 set "MYENV_SCRIPTS=%MYENV%\windows\scripts\"
 
 rem  Validate.
-if not "%MYENV_SCRIPTS%"=="%~dp0" (
-  echo [WARN][MYENV][MYENV_SCRIPTS] "%MYENV_SCRIPTS%" != "%~dp0"
+if not "%MYENV_SCRIPTS%" == "%~dp0" (
+  echo [WARN][MYENV] "%MYENV_SCRIPTS%" != "%~dp0"
 )
 
 set MYENV_SCRIPTS=
 
 
-if not "%*" == "" cd "%*"
+rem  --- CD if passed ---------------------------------------------------------
+if not "" == "%*" cd /d "%*"
