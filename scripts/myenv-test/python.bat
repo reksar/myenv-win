@@ -1,31 +1,31 @@
 setlocal EnableDelayedExpansion
 
-set py_path=
-set /a count=0
+set pythons=
+set /a pythons_count=0
 
 for /f %%i in ('where python 2^>NUL') do (
-  set /a count+=1
-  set py_path[!count!]=%%i
+  set /a pythons_count+=1
+  set pythons[!pythons_count!]=%%i
 )
 
 
 set /a path_warn=0
 
 for /f %%i in ('
-  echo %py_path[1]%^|findstr /e /c:"Microsoft\WindowsApps\python.exe"
+  echo %pythons[1]%^|findstr /e /c:"Microsoft\WindowsApps\python.exe"
 ') do (
-  set /a path_warn=1
-  echo [WARN] Python is Windows App.
+  set /a path_warn+=1
+  echo [WARN][%~n0] Python is a Windows App.
 )
 
-if /i not "%py_path[1]%"=="%MYHOME%\app\run\python\python.exe" (
-  set /a path_warn=1
-  echo [WARN] Python path is not in myenv.
+if /i not "%pythons[1]%" == "%MYENV_APPS%\python\python.exe" (
+  set /a path_warn+=1
+  echo [WARN][%~n0] Python is not in %%MYENV_APPS%%.
 )
 
 if %path_warn% NEQ 0 (
-  if %count% GTR 1 (
-    echo [WARN] Secondary Pythons found in PATH.
+  if %pythons_count% GTR 1 (
+    echo [WARN][%~n0] Secondary Pythons found in %%PATH%%.
   )
 )
 
@@ -33,13 +33,11 @@ if %path_warn% NEQ 0 (
 for /f %%i in ('
   python --version 2^>NUL^|findstr /e "[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*"
 ') do (
-  echo [OK] Python found.
-  goto :END
+  echo [OK][%~n0] Python found.
+  exit /b 0
 )
 
-echo [ERR] Python not found.
+echo [ERR][%~n0] Python not found.
 exit /b 1
 
-
-:END
 endlocal

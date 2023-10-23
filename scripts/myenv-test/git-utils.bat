@@ -1,20 +1,8 @@
 setlocal EnableDelayedExpansion
-
-set utils=cat sed
-
-for %%i in (%utils%) do (
-
-  set found=
-
-  for /f %%j in ('where %%i 2^>NUL') do (
-    set found=yes
-  )
-
-  if "!found!"=="yes" (
-    echo [OK] %%i found.
-  ) else (
-    echo [ERR] %%i not found.
-  )
+set UTILS=cat sed
+for %%i in (%UTILS%) do (
+  where %%i >NUL 2>&1 ^
+    && echo [OK][%~n0] %%i found. ^
+    || echo [ERR][%~n0] %%i not found.
 )
-
 endlocal
