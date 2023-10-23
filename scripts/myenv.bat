@@ -1,65 +1,51 @@
 @echo off
 
-rem  --------------------------------------------------------------------------
-rem  Portable myenv dir three:
-rem
-rem  MYHOME  <-- portable root
-rem  |- app
-rem     |- cfg
-rem     |  |- myenv
-rem     |     |- windows
-rem     |        |- scripts  <-- current dir
-rem     |           |- install
-rem     |- run  <-- portable software
-rem        |- cmake
-rem        |- git
-rem        |- nvim
-rem        |- python
-rem        |- vim
-rem  --------------------------------------------------------------------------
+rem  The path to portable applications. No trailing backslash.
+set "MYENV_APPS="
 
-
-for %%i in ("%~dp0..\..\..\..\..") do (
-  set "MYHOME=%%~fi"
-)
-set "MYENV=%MYHOME%\app\cfg\myenv"
-
-
-rem  --- Set PATH to portable software ----------------------------------------
-
-set "MYENV_RUN=%MYHOME%\app\run"
-
-
-rem  --- Python ---
-if exist "%MYENV_RUN%\python\python.exe" (
-  set "PATH=%MYENV_RUN%\python;%MYENV_RUN%\python\Scripts;%PATH%"
-)
-
-rem  --- Git ---
-if exist "%MYENV_RUN%\git\bin\git.exe" (
-  set "PATH=%MYENV_RUN%\git\bin;%PATH%"
+if "%MYENV_APPS%" == "" (
+  echo [ERR][%~nx0] `MYENV_APPS` is not set^^!
+  goto :APPS_END
 ) else (
-  if exist "%MYENV_RUN%\git\cmd\git.exe" (
-    set "PATH=%MYENV_RUN%\git\cmd;%PATH%"
+  if not exist "%MYENV_APPS%" (
+    echo [ERR][%~n0] "%MYENV_APPS%" does not exist^^!
+    goto :APPS_END
   )
 )
 
-rem  --- Git utils ---
-for /f %%i in ('where git 2^>NUL') do (
+rem  --- Set %PATH% for portale apps -------------------------------------- {{{
+
+rem  * Git
+git --version >NUL 2>&1 && goto :GIT_UTILS
+if exist "%MYENV_APPS%\git\cmd\git.exe" (
+  set "PATH=%MYENV_APPS%\git\cmd;%PATH%"
+  goto :GIT_UTILS
+) else (
+  if exist "%MYENV_APPS%\git\bin\git.exe" (
+    set "PATH=%MYENV_APPS%\git\bin;%PATH%"
+    goto :GIT_UTILS
+  )
+)
+goto :GIT_END
+:GIT_UTILS
+for /f %%i in ('where git') do (
   for %%j in (%%~dpi..) do (
     if exist "%%~fj\usr\bin" (
       set "PATH=%%~fj\usr\bin;%PATH%"
+      call "%~dp0myenv\git-config"
+      goto :GIT_END
     )
   )
 )
+:GIT_END
 
-rem  --- Neovim ---
-if exist "%MYENV_RUN%\nvim\bin\nvim.exe" (
-  set "PATH=%MYENV_RUN%\nvim\bin;%PATH%"
+rem  * Python
+if exist "%MYENV_APPS%\python\python.exe" (
+  set "PATH=%MYENV_APPS%\python;%MYENV_APPS%\python\Scripts;%PATH%"
 )
 
-rem  --- Vim ---
-for /d %%i in ("%MYENV_RUN%\vim\vim*") do (
+rem  * Vim
+for /d %%i in ("%MYENV_APPS%\vim\vim*") do (
   if exist "%%i\gvim.exe" (
     set "PATH=%%i;%PATH%"
   ) else (
@@ -69,39 +55,30 @@ for /d %%i in ("%MYENV_RUN%\vim\vim*") do (
   )
 )
 
-rem  --- CMake ---
-if exist "%MYENV_RUN%\cmake\bin\cmake.exe" (
-  set "PATH=%MYENV_RUN%\cmake\bin;%PATH%"
+rem  * Neovim
+if exist "%MYENV_APPS%\nvim\bin\nvim.exe" (
+  set "PATH=%MYENV_APPS%\nvim\bin;%PATH%"
 )
 
-rem  --- VC ---
-if exist "%MYENV_RUN%\vc\vcvars-x64-x64.bat" (
-  call "%MYENV_RUN%\vc\vcvars-x64-x64.bat"
+rem  * Visual C++
+if exist "%MYENV_APPS%\vc\vcvars-x64-x64.bat" (
+  call "%MYENV_APPS%\vc\vcvars-x64-x64.bat"
 )
 
-rem  --- Ripgrep ---
-if exist "%MYENV_RUN%\ripgrep\rg.exe" (
-  set "PATH=%MYENV_RUN%\ripgrep;%PATH%"
+rem  * CMake
+if exist "%MYENV_APPS%\cmake\bin\cmake.exe" (
+  set "PATH=%MYENV_APPS%\cmake\bin;%PATH%"
 )
 
-
-set MYENV_RUN=
-
-
-rem  --- Set PATH to Windows utility scripts ----------------------------------
-
-set "PATH=%~dp0;%PATH%"
-
-rem  Consider the trailing backslash!
-set "MYENV_SCRIPTS=%MYENV%\windows\scripts\"
-
-rem  Validate.
-if not "%MYENV_SCRIPTS%" == "%~dp0" (
-  echo [WARN][MYENV] "%MYENV_SCRIPTS%" != "%~dp0"
+rem  * Ripgrep
+if exist "%MYENV_APPS%\ripgrep\rg.exe" (
+  set "PATH=%MYENV_APPS%\ripgrep;%PATH%"
 )
 
-set MYENV_SCRIPTS=
+:APPS_END
+rem  ---------------------------------------------------------------------- }}}
 
+rem  Utility batch scripts.
+set "PATH=%PATH%;%~dp0"
 
-rem  --- CD if passed ---------------------------------------------------------
 if not "" == "%*" cd /d "%*"

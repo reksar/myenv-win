@@ -1,7 +1,7 @@
 @echo off
 setlocal
 set test=%~dp0myenv-test
-echo Testing myenv ...
+echo [INFO][%~n0] --- Testing MyENV ---
 call "%test%\vars"
 call "%test%\python"
 call "%test%\pip"
@@ -11,5 +11,5 @@ call "%test%\cl"
 call "%test%\cmake"
 call "%test%\nmake"
 call "%test%\rg"
-echo DONE
+echo [INFO][%~n0] --- Done ---
 endlocal
