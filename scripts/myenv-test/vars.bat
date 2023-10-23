@@ -9,3 +9,4 @@ if not exist "%MYENV_APPS%" (
   exit /b 2
 )
 echo [OK][%~n0] %%MYENV_APPS%% exist.
+exit /b 0

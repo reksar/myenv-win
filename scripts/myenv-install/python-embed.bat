@@ -1,4 +1,6 @@
 @echo off
+echo [ERR][%~n0] Broken for now.
+goto :EOF
 
 setlocal
 

@@ -1,4 +1,6 @@
 @echo off
+echo [ERR][%~n0] Broken for now.
+goto :EOF
 
 setlocal
 set PY_VERSION=3.10.6

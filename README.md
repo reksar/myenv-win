@@ -1,7 +1,20 @@
 # MyENV - Windows
 
-My working environment for Windows.
+My working environment for Windows:
 
-The entry point is `myenv.lnk`.
+* set `%MYENV_APPS%` in `scripts\myenv.bat`
+* entry point is `myenv.lnk`
+* use `myenv-test` cmd
 
-The `myenv-test` cmd can be useful.
+## Install portable apps
+
+Install specified `app` to `%MYENV_APPS%`:
+
+```batch
+myenv-install [app]
+```
+
+Available `app` values are set in `%APPS%` var in `scripts\myenv-install.bat`:
+
+* python
+* pip
