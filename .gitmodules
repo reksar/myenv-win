@@ -1,0 +1,3 @@
+[submodule "scripts/myenv-install/vsget"]
+	path = scripts/myenv-install/vsget
+	url = https://github.com/reksar/vsget

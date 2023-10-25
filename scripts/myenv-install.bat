@@ -1,9 +1,10 @@
 @echo off
 setlocal
-set APPS=python pip
+set APPS=python pip vs
 set app=%~1
 if "%app%" == "" (
   echo [ERR][%~n0] App is not specified!
+  echo [INFO][%~n0] Available apps: %APPS%
   goto :EOF
 )
 for %%i in (%APPS%) do (
@@ -24,5 +25,6 @@ echo [INFO][%~n0] Installing "%app%".
 call "%~dp0myenv-test\vars" || exit /b %ERRORLEVEL%
 call "%~dp0myenv-test\curl" || exit /b %ERRORLEVEL%
 call "%~dp0myenv-install\%app%" || exit /b %ERRORLEVEL%
-echo [INFO][%~n0] The "%app%" has been installed!
+echo [OK][%~n0] The "%app%" app has been installed!
+echo [INFO][%~n0] You probably need to restart MyENV.
 endlocal

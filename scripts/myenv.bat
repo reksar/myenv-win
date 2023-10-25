@@ -4,11 +4,11 @@ rem  The path to portable applications. No trailing backslash.
 set "MYENV_APPS="
 
 if "%MYENV_APPS%" == "" (
-  echo [ERR][%~nx0] `MYENV_APPS` is not set^^!
+  echo [ERR][%~nx0] `MYENV_APPS` is not set!
   goto :APPS_END
 ) else (
   if not exist "%MYENV_APPS%" (
-    echo [ERR][%~n0] "%MYENV_APPS%" does not exist^^!
+    echo [ERR][%~n0] "%MYENV_APPS%" does not exist!
     goto :APPS_END
   )
 )
@@ -60,9 +60,9 @@ if exist "%MYENV_APPS%\nvim\bin\nvim.exe" (
   set "PATH=%MYENV_APPS%\nvim\bin;%PATH%"
 )
 
-rem  * Visual C++
-if exist "%MYENV_APPS%\vc\vcvars-x64-x64.bat" (
-  call "%MYENV_APPS%\vc\vcvars-x64-x64.bat"
+rem  * Visual Studio
+if exist "%MYENV_APPS%\vs\vcvars-x64-x64.bat" (
+  call "%MYENV_APPS%\vs\vcvars-x64-x64.bat"
 )
 
 rem  * CMake
