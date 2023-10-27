@@ -15,7 +15,7 @@ set NUGET_URL=https://aka.ms/nugetclidl
 set destination=%~1
 set version=%~2
 
-if not "%version%" == "" set version=-Version %version%
+if not "%version%" == "" set version=-version %version%
 
 if "%destination%" == "" (
   echo [ERR][%~n0] Python destination is not specified!

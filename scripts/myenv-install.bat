@@ -2,6 +2,7 @@
 setlocal
 set APPS=python pip vs
 set app=%~1
+set version=%~2
 if "%app%" == "" (
   echo [ERR][%~n0] App is not specified!
   echo [INFO][%~n0] Available apps: %APPS%
@@ -24,7 +25,7 @@ goto :EOF
 echo [INFO][%~n0] Installing "%app%".
 call "%~dp0myenv-test\vars" || exit /b %ERRORLEVEL%
 call "%~dp0myenv-test\curl" || exit /b %ERRORLEVEL%
-call "%~dp0myenv-install\%app%" || exit /b %ERRORLEVEL%
+call "%~dp0myenv-install\%app%" %version% || exit /b %ERRORLEVEL%
 echo [OK][%~n0] The "%app%" app has been installed!
 echo [INFO][%~n0] You probably need to restart MyENV.
 endlocal

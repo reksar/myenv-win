@@ -12,7 +12,7 @@ My working environment for Windows:
 Install specified `app` to `%MYENV_APPS%`:
 
 ```batch
-myenv-install [app]
+myenv-install [app] {version}
 ```
 
 Available `app` values are set in `%APPS%` var in `scripts\myenv-install.bat`:
@@ -20,3 +20,5 @@ Available `app` values are set in `%APPS%` var in `scripts\myenv-install.bat`:
 * `python`
 * `pip`
 * `vs` (MS Visual Studio)
+
+The optional `version` is partially supported.
