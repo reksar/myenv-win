@@ -1,1 +1,1 @@
-scripts/myenv.bat filter=clear-base-paths
+scripts/pwe.bat filter=clear-base-paths

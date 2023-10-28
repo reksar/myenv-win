@@ -16,10 +16,10 @@ for /f %%i in ('python --version') do (
   )
 )
 
-rem  The MYPYTHON_PATH must be set on myenv init.
+rem  The MYPYTHON_PATH must be set on pwe init.
 if exist %MYPYTHON_PATH%\python.exe (
   echo [Install python] WARN: %MYPYTHON_PATH%\python.exe found.
-  goto :MYENV
+  goto :PWE
 )
 
 
@@ -36,8 +36,8 @@ call unzip "%python_zip%" "%MYPYTHON_PATH%" || goto :END
 del "%python_zip%"
 
 
-:MYENV
-call myenv-python
+:PWE
+call pwe-python
 
 
 call install pip

@@ -21,9 +21,9 @@ if "%python_path%" == "" (
 )
 
 set /a rc=0
-if /i not "%python_path%" == "%MYENV_APPS%\python\python.exe" (
+if /i not "%python_path%" == "%PWE_APPS%\python\python.exe" (
   set /a rc+=1
-  echo [WARN][%~n0] Python is not in %%MYENV_APPS%%!
+  echo [WARN][%~n0] Python is not in %%PWE_APPS%%!
   echo %python_path%|findstr /e /c:"Microsoft\WindowsApps\python.exe" >NUL && (
     set /a rc+=1
     echo [WARN][%~n0] Python is a Windows App!

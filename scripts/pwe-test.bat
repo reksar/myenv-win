@@ -1,8 +1,8 @@
 @echo off
 setlocal
-set "test=%~dp0myenv-test"
+set "test=%~dp0pwe-test"
 if "%test%" == "%CD%" cd ..
-echo [INFO][%~n0] --- Testing MyENV ---
+echo [INFO][%~n0] --- Testing PWE ---
 call "%test%\vars"
 call "%test%\curl"
 call "%test%\git"

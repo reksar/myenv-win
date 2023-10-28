@@ -10,10 +10,10 @@ if "%app%" == "" (
 )
 for %%i in (%APPS%) do (
   if "%%i" == "%app%" (
-    if exist "%~dp0myenv-install\%app%.bat" (
+    if exist "%~dp0pwe-install\%app%.bat" (
       goto :INSTALL
     ) else (
-      echo [ERR][%~n0] Installer for the app "%app%" is not found!
+      echo [ERR][%~n0] The "%app%" installer is not found!
       goto :EOF
     )
   )
@@ -23,9 +23,9 @@ echo [INFO][%~n0] Available apps: %APPS%
 goto :EOF
 :INSTALL
 echo [INFO][%~n0] Installing "%app%".
-call "%~dp0myenv-test\vars" || exit /b %ERRORLEVEL%
-call "%~dp0myenv-test\curl" || exit /b %ERRORLEVEL%
-call "%~dp0myenv-install\%app%" %version% || exit /b %ERRORLEVEL%
-echo [OK][%~n0] The "%app%" app has been installed!
-echo [INFO][%~n0] You probably need to restart MyENV.
+call "%~dp0pwe-test\vars" || exit /b %ERRORLEVEL%
+call "%~dp0pwe-test\curl" || exit /b %ERRORLEVEL%
+call "%~dp0pwe-install\%app%" %version% || exit /b %ERRORLEVEL%
+echo [OK][%~n0] "%app%" has been installed.
+echo [INFO][%~n0] You probably need to restart the PWE.
 endlocal

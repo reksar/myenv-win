@@ -1,6 +1,6 @@
 for /f %%i in ('
   where cl 2^>NUL ^
-    ^| findstr /c:"%MYENV_APPS%\\" ^
+    ^| findstr /c:"%PWE_APPS%\\" ^
     ^| findstr /c:"\\VC\Tools\MSVC\\" ^
     ^| findstr /c:"\\cl.exe"
 ') do (

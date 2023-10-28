@@ -1,21 +1,19 @@
-# MyENV - Windows
+# Portable Windows Environment
 
-My working environment for Windows:
-
-* `git clone --recurse-submodules https://github.com/reksar/myenv-win.git`
-* set `%MYENV_APPS%` in `scripts\myenv.bat`
-* entry point is `myenv.lnk`
-* use `myenv-test` cmd
+* `git clone --recurse-submodules https://github.com/reksar/pwe.git`
+* set `%PWE_APPS%` in `scripts\pwe.bat`
+* entry point is `pwe.lnk`
+* use `pwe-test` cmd
 
 ## Install portable apps
 
-Install specified `app` to `%MYENV_APPS%`:
+Install specified `app` to `%PWE_APPS%`:
 
 ```batch
-myenv-install [app] {version}
+pwe-install [app] {version}
 ```
 
-Available `app` values are set in `%APPS%` var in `scripts\myenv-install.bat`:
+Available `app` values are set in `%APPS%` var in `scripts\pwe-install.bat`:
 
 * `python`
 * `pip`

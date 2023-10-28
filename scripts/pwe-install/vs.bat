@@ -2,11 +2,11 @@
 
 setlocal
 
-set "DESTINATION=%MYENV_APPS%\vs"
+set "DESTINATION=%PWE_APPS%\vs"
 
 for %%i in (%~dp0..) do set "scripts=%%~fi"
 
-call "%scripts%\myenv-test\cl" && (
+call "%scripts%\pwe-test\cl" && (
   if exist "%DESTINATION%\vcvars*.bat" (
     echo [ERR][%~n0] Delete the "%DESTINATION%" first!
     exit /b 1
@@ -15,7 +15,7 @@ call "%scripts%\myenv-test\cl" && (
   exit /b 2
 )
 
-call "%scripts%\myenv-install\vsget\vsget" "%DESTINATION%" || (
+call "%scripts%\pwe-install\vsget\vsget" "%DESTINATION%" || (
   echo [ERR][%~n0] Unable to get Visual Studio!
   exit /b 3
 )
