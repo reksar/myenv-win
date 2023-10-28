@@ -36,7 +36,7 @@ for /f %%i in ('
   echo [OK][%~n0] Python found.
   exit /b %rc%
 )
-echo [ERR][%~n0] Python path found, but version check failed!
+echo [ERR][%~n0] Python found, but version check failed!
 exit /b 4
 
 endlocal

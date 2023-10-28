@@ -1,4 +1,4 @@
-# Portable Windows Environment
+# Portable Windows Environment (PWE)
 
 * `git clone --recurse-submodules https://github.com/reksar/pwe.git`
 * set `%PWE_APPS%` in `scripts\pwe.bat`
@@ -7,16 +7,14 @@
 
 ## Install portable apps
 
-Install specified `app` to `%PWE_APPS%`:
+Install the specified `app` to `%PWE_APPS%` using the
+`scripts\pwe-install\<app>.bat` installer:
 
 ```batch
-pwe-install [app] {version}
+pwe-install [app] {options}
 ```
 
-Available `app` values are set in `%APPS%` var in `scripts\pwe-install.bat`:
+The `options` can be:
 
-* `python`
-* `pip`
-* `vs` (MS Visual Studio)
-
-The optional `version` is partially supported.
+* `-force` to delete existing app dir before install
+* `-version <value>`
