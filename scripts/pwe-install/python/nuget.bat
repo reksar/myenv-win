@@ -48,8 +48,10 @@ del "%nuget%"
 echo [INFO][%~n0] Moving files to destination
 robocopy "%destination%\python\tools" "%destination%" *.* ^
   /xd "%destination%" /move /s >NUL
-rem  Remove `python` dir created by nuget.
+
+rem  Remove dirs created by nuget.
 rd /s /q "%destination%\python"
+rd /s /q "%USERPROFILE%\.nuget"
 
 exit /b 0
 endlocal
