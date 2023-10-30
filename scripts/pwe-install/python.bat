@@ -30,7 +30,7 @@ set /a rc=%ERRORLEVEL%
 if %rc% EQU 0 (
   if "%force%" == "true" (
     echo [WARN][%n0%] Deleting existing "%DESTINATION%".
-    rmdir /s /q "%DESTINATION%"
+    rd /s /q "%DESTINATION%"
   ) else (
     echo [ERR][%n0%] Delete the "%DESTINATION%" first or add a `-force` arg!
     exit /b 1

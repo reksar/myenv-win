@@ -1,7 +1,7 @@
 @echo off
 
 rem  The path to portable applications. No trailing backslash.
-set "PWE_APPS=D:\reksarka\app\run"
+set "PWE_APPS="
 
 if "%PWE_APPS%" == "" (
   echo [ERR][%~nx0] `PWE_APPS` is not set!
@@ -55,7 +55,7 @@ for /d %%i in ("%PWE_APPS%\vim\vim*") do (
   )
 )
 
-rem  * Neovim
+rem  * Nvim
 if exist "%PWE_APPS%\nvim\bin\nvim.exe" (
   set "PATH=%PWE_APPS%\nvim\bin;%PATH%"
 )

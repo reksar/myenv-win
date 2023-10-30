@@ -7,14 +7,11 @@
 
 ## Install portable apps
 
-Install the specified `app` to `%PWE_APPS%` using the
-`scripts\pwe-install\<app>.bat` installer:
+Run `pwe-install` without args to list available apps.
 
-```batch
-pwe-install [app] {options}
-```
+Install the specified `app` to `%PWE_APPS%`: `pwe-install [app] {options}`.
 
-The `options` can be:
+The `options` depends on `scripts\pwe-install\<app>.bat` installer and can be:
 
 * `-force` to delete existing app dir before install
 * `-version <value>`
