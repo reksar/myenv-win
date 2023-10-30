@@ -14,5 +14,6 @@ call "%test%\cl"
 call "%test%\nmake"
 call "%test%\cmake"
 call "%test%\rg"
+call "%test%\nvim"
 echo [INFO][%~n0] --- Done ---
 endlocal

@@ -79,5 +79,7 @@ copy /y "%dp%nvim\portable.bat" "%DESTINATION%\bin" >NUL
 copy /y "%dp%nvim\vi.bat" "%DESTINATION%\bin" >NUL
 copy /y "%dp%nvim\gvi.bat" "%DESTINATION%\bin" >NUL
 
+echo [NOTE][%n0%] Recommended fonts https://www.nerdfonts.com
+
 exit /b 0
 endlocal
