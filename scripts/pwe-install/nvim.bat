@@ -75,11 +75,16 @@ if not exist "%extracted_path%" (
 echo [INFO][%n0%] Moving files to destination.
 robocopy "%extracted_path%" "%DESTINATION%" *.* ^
   /xd "%DESTINATION%" /move /s >NUL
-copy /y "%dp%nvim\portable.bat" "%DESTINATION%\bin" >NUL
-copy /y "%dp%nvim\vi.bat" "%DESTINATION%\bin" >NUL
-copy /y "%dp%nvim\gvi.bat" "%DESTINATION%\bin" >NUL
+
+rem  Making Nvim portable.
+echo [INFO][%n0%] Copying utility scripts.
+for %%i in (portable vi gvi) do (
+  copy /y "%dp0%nvim\%%i.bat" "%DESTINATION%\bin" >NUL || (
+    echo [ERR][%n0%] Cannot copy utility "%%i.bat"!
+    exit /b 6
+  )
+)
 
 echo [NOTE][%n0%] Recommended fonts https://www.nerdfonts.com
-
 exit /b 0
 endlocal
