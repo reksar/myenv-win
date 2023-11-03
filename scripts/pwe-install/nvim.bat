@@ -76,14 +76,16 @@ echo [INFO][%n0%] Moving files to destination.
 robocopy "%extracted_path%" "%DESTINATION%" *.* ^
   /xd "%DESTINATION%" /move /s >NUL
 
-rem  Making Nvim portable.
-echo [INFO][%n0%] Copying utility scripts.
+echo [INFO][%n0%] Adding portable Nvim runners `vi` and `gvi`.
 for %%i in (portable vi gvi) do (
   copy /y "%dp0%nvim\%%i.bat" "%DESTINATION%\bin" >NUL || (
     echo [ERR][%n0%] Cannot copy utility "%%i.bat"!
     exit /b 6
   )
 )
+
+echo [INFO][%n0%] Adding "my.nvim" config.
+robocopy "%dp0%nvim\my.nvim" "%DESTINATION%\share\nvim" *.* /s >NUL
 
 echo [NOTE][%n0%] Recommended fonts https://www.nerdfonts.com
 exit /b 0
