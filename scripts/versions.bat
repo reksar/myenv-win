@@ -17,9 +17,11 @@ set URL=https://endoflife.date/api
 set app=%~1
 if "%app%" == "" exit /b 1
 
+call "%~dp0pwe-test\curl" >NUL || exit /b 2
+
 rem  Exit if %app% is unknown.
 for /f %%i in ('curl --silent %URL%/all.json') do (
-  echo %%i | findstr /rc:"\<%app%\>" >NUL 2>&1 || exit /b 2
+  echo %%i | findstr /rc:"\<%app%\>" >NUL 2>&1 || exit /b 3
 )
 
 for /f %%i in ('curl --silent %URL%/%app%.json') do set "versions=%%i"
