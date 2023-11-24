@@ -1,19 +1,26 @@
 @echo off
 
-rem  The path to portable applications. No trailing backslash.
+rem  The root path to the portable apps.
 set "PWE_APPS="
 
+rem  --- Set %PATH% for portale apps -------------------------------------- {{{
+
+rem  * Preprocess the %PWE_APPS%
 if "%PWE_APPS%" == "" (
   echo [ERR][%~nx0] `PWE_APPS` is not set!
-  goto :APPS_END
+  goto :ADD_SELF_PATH
 ) else (
   if not exist "%PWE_APPS%" (
     echo [ERR][%~n0] "%PWE_APPS%" does not exist!
-    goto :APPS_END
+    goto :ADD_SELF_PATH
   )
 )
-
-rem  --- Set %PATH% for portale apps -------------------------------------- {{{
+rem  ** If contains "..", make an abs path.
+if not "%PWE_APPS:..=%" == "%PWE_APPS%" (
+  for %%i in ("%PWE_APPS%") do set PWE_APPS=%%~fi
+)
+rem  ** Remove the trailing backslash.
+if "%PWE_APPS:~-1%" == "\" set PWE_APPS=%PWE_APPS:~0,-1%
 
 rem  * Git
 git --version >NUL 2>&1 && goto :GIT_UTILS
@@ -75,9 +82,9 @@ if exist "%PWE_APPS%\ripgrep\rg.exe" (
   set "PATH=%PWE_APPS%\ripgrep;%PATH%"
 )
 
-:APPS_END
 rem  ---------------------------------------------------------------------- }}}
 
-set "PATH=%PATH%;%~dp0"
+:ADD_SELF_PATH
+set "PATH=%~dp0;%PATH%"
 
 if not "" == "%*" cd /d "%*"
